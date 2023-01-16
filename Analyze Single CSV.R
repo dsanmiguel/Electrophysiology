@@ -82,13 +82,12 @@ rm(df, sweeps_count, old_names, new_names)
 # If needed an additional filter for `Time (ms)` can be added
 
 sweeps_AP_count <- df1 %>% 
-  filter(`Voltage (mV)` > 0) %>% 
+  filter(`Voltage (mV)` > voltage_cutoff) %>% 
   filter(lag(`dV/dT`) >= 0 &
            `dV/dT` < 0) %>% 
-  filter((max(`Voltage (mV)`, na.rm = TRUE)/(`Voltage (mV)`)) < 1.5) %>% 
   select(Sweep) %>% 
   table() %>% 
-  as.data.frame()
+  as.data.frame() 
 
 # create NA variables which are overwritten later if they exist
 # If these NAs are not created then later parts will fail to run to
