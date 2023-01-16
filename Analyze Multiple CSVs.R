@@ -16,23 +16,23 @@ library(tidyverse)
 
 ### This script assumes various set values throughout that of course can be changed
 ### Action potential peak voltage values that are above 0 set by the variable "voltage_cutoff" below
-
+### as well as at least 2/3 of the max action potential for that Sweep
+### 
+### This may not be ideal for your purposes so please verify 
+### accurate number of peaks for analysis
+### 
 # choose folder where CSV files are located, please only have the data CSV files in this folder
 setwd(rstudioapi::selectDirectory())
 
 
-#### Import Identifier Data frame to be used later
-#### The two dots in front indicate it is in the folder above the one
-#### in the current working directory we are currently in (set above using setwd)
-#### 
-#### This will obviously be specific for each experiment so edit this accordingly
-#### to match the length of the number of CSV files you are trying to process in this directory
-
-# this assumes a file named Experiment Identifiers.csv is in the folder above the CSV folder you selected above
-# Experiment Identifiers.csv should be a CSV file that contains four columns:
+# Select Experiment Identifiers file that should be a CSV file which contains four columns:
 # ObsID, MouseID, CellID, Filename_IV
-# for later merging with data output
-identifiers <- read_csv("../Experiment Identifiers.csv")
+# for later merging with data output where Filename_IV contains names of your CSV files 
+# without the .csv extension added to the name
+# This will obviously be specific for each experiment so edit this accordingly
+# to match the length of the number of CSV files you are trying to process in this directory
+
+identifiers <- read_csv(file.choose())
 
 # create minimum voltage peaks must pass to count as peaks (lower bound)
 voltage_cutoff <- 0
@@ -41,7 +41,7 @@ all_data <- NULL
 finaldf <- NULL
 
 for (i in list.files(pattern = "csv")) {
-  # import data and get rid of top two rows since the way the data is outputf rom abf to csv
+  # import data and get rid of top two rows since the way the data is output from abf to csv
   # these are not necessary as we will transform and fix column names later
   # and then this removes any empty columns that are only NAs 
   df <- read_csv(i, col_names = FALSE) %>% 
@@ -164,7 +164,7 @@ for (i in list.files(pattern = "csv")) {
   
   ########################################################################
   ########################################################################
-  ############ IF LOOP BEGINS HERE FOR THOSE WITH ACTION POTENTIALS ########
+  ############ IF LOOP BEGINS HERE FOR THOSE SWEEPS WITH ACTION POTENTIALS
   ########################################################################
   ########################################################################
   ########################################################################

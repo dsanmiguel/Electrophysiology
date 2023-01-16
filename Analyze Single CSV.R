@@ -16,32 +16,29 @@ library(tidyverse)
 
 ### This script assumes various set values throughout that of course can be changed
 ### Action potential peak voltage values that are above 0 set by the variable "voltage_cutoff" below
-
-#### Import Identifier Data frame to be used later
-#### The two dots in front indicate it is in the folder above the one
-#### in the current working directory we are currently in (set above using setwd)
-#### 
-#### This will obviously be specific for each experiment so edit this accordingly
-#### to match the length of the number of CSV files you are trying to process in this directory
-
-# this assumes a file named Experiment Identifiers.csv is in the folder above the CSV folder you selected above
-# Experiment Identifiers.csv should be a CSV file that contains four columns:
-# ObsID, MouseID, CellID, Filename_IV
-# for later merging with data output
-
-
-
+### as well as at least 2/3 of the max action potential for that Sweep
+### 
+### This may not be ideal for your purposes so please verify 
+### accurate number of peaks for analysis
+### 
 # select a CSV file in the current directory to run this script on
-filename <- read_csv(file.choose())
+mycsvfile <- file.choose()
+
+# Select Experiment Identifiers file that should be a CSV file which contains four columns:
+# ObsID, MouseID, CellID, Filename_IV
+# for later merging with data output where Filename_IV contains names of your CSV files 
+# without the .csv extension added to the name
+# This will obviously be specific for each experiment so edit this accordingly
+# to match the length of the number of CSV files you are trying to process in this directory
 
 identifiers <- read_csv(file.choose())
 
 voltage_cutoff <- 0
 
-# import data and get rid of top two rows since the way the data is outputf rom abf to csv
+# import data and get rid of top two rows since the way the data is output from abf to csv
 # these are not necessary as we will transform and fix column names later
 # and then this removes any empty columns that are only NAs 
-df <- read_csv(filename, col_names = FALSE) %>% 
+df <- read_csv(mycsvfile, col_names = FALSE) %>% 
   slice(-c(1:2)) %>% 
   select(
     where(
@@ -157,9 +154,16 @@ all_APs_all_sweeps <- df1 %>%
            `dV/dT` < 0)
 
 # get filename without csv extension
-filename <- tools::file_path_sans_ext(filename)
+filename <- tools::file_path_sans_ext(basename(mycsvfile))
 # match up filename to other identifiers in identifier data like ObsID, Mouse, and Cell
 this_identifier <- identifiers %>% filter(Filename_IV == filename)
+
+########################################################################
+########################################################################
+############ IF LOOP BEGINS HERE FOR THOSE SWEEPS WITH ACTION POTENTIALS
+########################################################################
+########################################################################
+########################################################################
 
 if (length(sweeps_AP_count) > 1) {
   
@@ -449,3 +453,4 @@ if (length(sweeps_AP_count) > 1) {
                           "Interevent Interval_last" = `Interevent Interval_last`,
                           "SFA (1st ISI/last ISI)" = `SFA (1st ISI/last ISI)`) }
 
+write_csv(finaldf, "../Data Analysis output.csv")
