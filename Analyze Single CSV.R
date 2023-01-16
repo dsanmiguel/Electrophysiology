@@ -359,25 +359,25 @@ if (length(sweeps_AP_count) > 1) {
     select(`Peak-to-Peak Frequency (Hz)`) %>% 
     max(na.rm = TRUE)
   
-  `Interevent Interval_1` <- max_AP_sweep %>% 
-    ungroup() %>% 
-    select(`Interevent Interval (ms)`) %>% 
-    drop_na() %>% 
-    head(1) %>% 
-    unlist() %>% 
-    as.numeric()
-  
-  `Interevent Interval_last` <- max_AP_sweep %>% 
-    ungroup() %>% 
-    select(`Interevent Interval (ms)`) %>% 
-    drop_na() %>% 
-    tail(1) %>% 
-    unlist() %>% 
-    as.numeric()
-  
   if (max(AP_count_all_sweeps$`AP Count`) < 2) {
     `Interevent Interval_1` <- NA
     `Interevent Interval_last` <- NA
+  } else {
+    `Interevent Interval_1` <- max_AP_sweep %>% 
+      ungroup() %>% 
+      select(`Interevent Interval (ms)`) %>% 
+      drop_na() %>% 
+      head(1) %>% 
+      unlist() %>% 
+      as.numeric()
+    
+    `Interevent Interval_last` <- max_AP_sweep %>% 
+      ungroup() %>% 
+      select(`Interevent Interval (ms)`) %>% 
+      drop_na() %>% 
+      tail(1) %>% 
+      unlist() %>% 
+      as.numeric()
   }
   
   maxAHPdeltathreshold <- max_AHP_1stAP_Voltage - `Threshold Em (mV)`
