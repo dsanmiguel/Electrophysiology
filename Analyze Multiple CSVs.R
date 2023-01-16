@@ -16,7 +16,7 @@ library(tidyverse)
 
 ### This script assumes various set values throughout that of course can be changed
 ### Action potential peak voltage values that are above 0 set by the variable "voltage_cutoff" below
-### as well as at least 2/3 of the max action potential for that Sweep
+### as well as an additional parameters described by sweeps_AP_count variable
 ### 
 ### This may not be ideal for your purposes so please verify 
 ### accurate number of peaks for analysis
