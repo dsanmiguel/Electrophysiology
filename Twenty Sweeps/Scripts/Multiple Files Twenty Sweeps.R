@@ -92,11 +92,6 @@ for (mycsvfile in list.files(pattern = "csv", path = get("csvpath"))) {
   # remove variables we don't need later
   rm(df, sweeps_count, old_names, new_names)
   
-  # this then counts the number of peaks for each sweep that are above 0 as a baseline Voltage (mV)
-  # by looking at the change in dV/dT from positive to negative as well as peaks at least 2/3 as
-  # the max peak
-  # If needed an additional filter for `Time (ms)` can be added
-  
   
   # create NA variables which are overwritten later if they exist
   # If these NAs are not created then later parts will fail to run to
