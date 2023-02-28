@@ -1,7 +1,7 @@
 # Electrophysiology Clampfit Data Extraction and Peak Detection
 
 These are R scripts that collect various electrophysiology data from CSV files that were converted from Axon Binary File (ABF) format. 
-Please see https://github.com/swharden/AbfConvert for this functionality which can be used with Windows.
+Please see https://github.com/swharden/AbfConvert for this functionality.
 
 The purpose of these scripts are to serve as a less time-consuming alternative to manually extracting the data using Clampfit.
 
