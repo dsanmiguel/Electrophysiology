@@ -12,3 +12,5 @@ There are versions for analysis on Break In, Twenty Sweeps, or Three Sweeps.
 *In each folder there is a "Multiple Files" version to be ran on a folder of CSVs converted from ABFs or an "Single File" version if you only need analysis ran on one CSV at a time.*
 
 The output data is in CSV format as well.
+
+***These scripts are meant to be ran within RStudio, otherwise edit file paths accordingly.***
