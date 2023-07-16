@@ -2,7 +2,7 @@ rm(list=ls())
 library(tidyverse)
 
 ### This script was written by Daniel Anthony San Miguel Jr.,
-### PhD Student at University of Austin as of 2023
+### PhD Student at University of Texas at Austin as of 2023
 ### College of Pharmacy, Division of Pharmacology & Toxicology
 ### 
 ### If you or someone else plans to use or edit this script, please cite me.
